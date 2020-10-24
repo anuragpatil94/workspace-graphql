@@ -1,6 +1,12 @@
 const graphql = require("graphql");
+const _ = require("lodash");
 
-const { GraphQLObjectType, GraphQLString, GraphQLInt } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema } = graphql;
+
+const users = [
+  { id: "1", firstName: "James", age: 27 },
+  { id: "2", firstName: "Camie", age: 29 },
+];
 
 const UserType = new GraphQLObjectType({
   name: "User",
@@ -31,7 +37,7 @@ const PositionType = new GraphQLObjectType({
 });
 
 const RootQuery = new GraphQLObjectType({
-  name: "RootQUeryType",
+  name: "RootQueryType",
   fields: {
     user: {
       type: UserType,
@@ -42,7 +48,12 @@ const RootQuery = new GraphQLObjectType({
          * args: whatever args passed into original query
          */
         // Go to database and find the actual data
+        return _.find(users, { id: args.id });
       },
     },
   },
+});
+
+module.exports = new GraphQLSchema({
+  query: RootQuery,
 });
