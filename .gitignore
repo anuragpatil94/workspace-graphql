@@ -1,4 +1,6 @@
 _other
 
+node_modules/
+
 # Package
 package-lock.json
