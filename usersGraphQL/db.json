@@ -6,6 +6,11 @@
   ],
   "companies": [
     { "id": "1", "name": "Apple", "description": "Think Different" },
-    { "id": "2", "name": "Google", "description": "Just Google it" }
+    { "id": "2", "name": "Google", "description": "Just Google it" },
+    {
+      "id": "3",
+      "name": "Microsoft",
+      "description": "Where do you want to go today?"
+    }
   ]
 }

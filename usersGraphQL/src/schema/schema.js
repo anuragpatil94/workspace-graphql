@@ -1,16 +1,15 @@
 const graphql = require("graphql");
-const axios = require("axios");
+const axios = require("axios").default;
 const _ = require("lodash");
 
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema } = graphql;
 
-const UserType = new GraphQLObjectType({
-  name: "User",
+const PositionType = new GraphQLObjectType({
+  name: "Position",
   fields: {
     id: { type: GraphQLString },
-    firstName: { type: GraphQLString },
-    age: { type: GraphQLInt },
-    companyId: { type: GraphQLString },
+    name: { type: GraphQLString },
+    description: { type: GraphQLString },
   },
 });
 
@@ -23,12 +22,20 @@ const CompanyType = new GraphQLObjectType({
   },
 });
 
-const PositionType = new GraphQLObjectType({
-  name: "Position",
+const UserType = new GraphQLObjectType({
+  name: "User",
   fields: {
     id: { type: GraphQLString },
-    name: { type: GraphQLString },
-    description: { type: GraphQLString },
+    firstName: { type: GraphQLString },
+    age: { type: GraphQLInt },
+    company: {
+      type: CompanyType,
+      async resolve(parentValue, args) {
+        return axios
+          .get(`http://localhost:3000/companies/${parentValue.companyId}`)
+          .then((res) => res.data);
+      },
+    },
   },
 });
 
@@ -44,9 +51,18 @@ const RootQuery = new GraphQLObjectType({
          * args: whatever args passed into original query
          */
         // Go to database and find the actual data
-        return axios.default
+        return axios
           .get(`http://localhost:3000/users/${args.id}`)
           .then((resp) => resp.data);
+      },
+    },
+    company: {
+      type: CompanyType,
+      args: { id: { type: GraphQLString } },
+      async resolve(parentValue, args) {
+        return axios
+          .get(`http://localhost:3000/companies/${args.id}`)
+          .then((res) => res.data);
       },
     },
   },
