@@ -5,17 +5,14 @@ class SongList extends Component {
   renderSongs() {
     if (!this.props.data.loading)
       return this.props.data.songs.map(({ id, title }, index) => (
-        <li key={id}>{title}</li>
+        <li className="collection-item" key={id}>
+          {title}
+        </li>
       ));
     else return <p>Loading!!!</p>;
   }
   render() {
-    return (
-      <div>
-        <h2>Songs List</h2>
-        {this.renderSongs()}
-      </div>
-    );
+    return <ul className="collection">{this.renderSongs()}</ul>;
   }
 }
 
