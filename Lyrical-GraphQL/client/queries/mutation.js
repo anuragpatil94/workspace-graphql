@@ -7,3 +7,11 @@ export const deleteSong = gql`
     }
   }
 `;
+
+export const createLyric = gql`
+  mutation CreateLyric($content: String!, $songId: ID!) {
+    addLyricToSong(content: $content, songId: $songId) {
+      id
+    }
+  }
+`;
