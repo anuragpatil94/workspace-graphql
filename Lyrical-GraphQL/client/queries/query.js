@@ -8,3 +8,18 @@ export const fetchSongs = gql`
     }
   }
 `;
+
+// `!` mark means that id is required
+export const fetchSong = gql`
+  query FetchSong($id: ID!) {
+    song(id: $id) {
+      id
+      title
+      lyrics {
+        id
+        likes
+        content
+      }
+    }
+  }
+`;
