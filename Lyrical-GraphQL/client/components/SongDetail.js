@@ -2,8 +2,17 @@ import React from "react";
 import { graphql } from "react-apollo";
 import { Link } from "react-router-dom";
 import { fetchSong } from "../queries/query";
+import LyricCreate from "./LyricCreate";
+import LyricList from "./LyricList";
 
 class SongDetail extends React.Component {
+  onLyricDelete(id) {
+    this.props.mutate({
+      variables: { id },
+      refetchQueries: [{ query: fetchSong }],
+    });
+  }
+
   render() {
     const { song } = this.props.data;
 
@@ -15,6 +24,8 @@ class SongDetail extends React.Component {
       <div>
         <Link to="/">Back</Link>
         <h3>{song.title}</h3>
+        <LyricList lyrics={song.lyrics} />
+        <LyricCreate songId={song.id} />
       </div>
     );
   }
