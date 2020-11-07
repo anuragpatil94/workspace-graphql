@@ -5,12 +5,11 @@ import { deleteSong } from "../queries/mutation";
 import { fetchSongs } from "../queries/query";
 class SongList extends Component {
   onSongDelete(id) {
-    this.props
-      .mutate({
-        variables: { id },
-        // refetchQueries: [{ query: fetchSongs }],
-      })
-      .then(() => this.props.data.refetch());
+    this.props.mutate({
+      variables: { id },
+      refetchQueries: [{ query: fetchSongs }],
+    });
+    // .then(() => this.props.data.refetch());
   }
   renderSongs() {
     return this.props.data.songs.map(({ id, title }) => (
