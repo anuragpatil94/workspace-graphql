@@ -1,12 +1,25 @@
 import React from "react";
-class LyricList extends React.Component {
-  renderLyric() {
-    console.log(this.props);
+import { graphql } from "react-apollo";
+import { likeLyric } from "../queries/mutation";
 
+class LyricList extends React.Component {
+  onLikeLyric(id) {
+    this.props.mutate({
+      variables: {
+        id: id,
+      },
+    });
+  }
+  renderLyric() {
     return this.props.lyrics.map(({ id, content, likes }) => (
       <li className="collection-item" key={id}>
         {content}
-        <i className="material-icons">thumb_up</i>
+        {/* <span>
+          <i className="material-icons" onClick={() => this.onLikeLyric(id)}>
+            thumb_up
+          </i>
+          {likes}
+        </span> */}
       </li>
     ));
   }
@@ -15,4 +28,4 @@ class LyricList extends React.Component {
   }
 }
 
-export default LyricList;
+export default graphql(likeLyric)(LyricList);

@@ -8,10 +8,23 @@ export const deleteSong = gql`
   }
 `;
 
-export const createLyric = gql`
-  mutation CreateLyric($content: String!, $songId: ID!) {
+export const addLyricToSong = gql`
+  mutation AddLyricToSong($content: String!, $songId: ID!) {
     addLyricToSong(content: $content, songId: $songId) {
       id
+      lyrics {
+        id
+        content
+      }
+    }
+  }
+`;
+
+export const likeLyric = gql`
+  mutation LikeLyric($id: ID!) {
+    likeLyric(id: $id) {
+      id
+      likes
     }
   }
 `;

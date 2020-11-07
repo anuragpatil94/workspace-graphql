@@ -1,7 +1,6 @@
 import React from "react";
 import { graphql } from "react-apollo";
-import { createLyric } from "../queries/mutation";
-import { fetchSong } from "../queries/query";
+import { addLyricToSong } from "../queries/mutation";
 
 class LyricCreate extends React.Component {
   constructor(props) {
@@ -13,14 +12,13 @@ class LyricCreate extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.props
-      .mutate({
-        variables: {
-          songId: this.props.songId,
-          content: this.state.content,
-        },
-      })
-      .then(() => {});
+    this.props.mutate({
+      variables: {
+        songId: this.props.songId,
+        content: this.state.content,
+      },
+    });
+
     this.setState({ content: "" });
   }
 
@@ -37,4 +35,4 @@ class LyricCreate extends React.Component {
   }
 }
 
-export default graphql(createLyric)(LyricCreate);
+export default graphql(addLyricToSong)(LyricCreate);

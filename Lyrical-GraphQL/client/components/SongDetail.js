@@ -6,15 +6,9 @@ import LyricCreate from "./LyricCreate";
 import LyricList from "./LyricList";
 
 class SongDetail extends React.Component {
-  onLyricDelete(id) {
-    this.props.mutate({
-      variables: { id },
-      refetchQueries: [{ query: fetchSong }],
-    });
-  }
-
   render() {
     const { song } = this.props.data;
+    console.log(this.props.data);
 
     if (!song) {
       return <div>Loading...</div>;
