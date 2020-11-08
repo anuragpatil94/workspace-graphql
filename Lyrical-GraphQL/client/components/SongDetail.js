@@ -8,7 +8,6 @@ import LyricList from "./LyricList";
 class SongDetail extends React.Component {
   render() {
     const { song } = this.props.data;
-    console.log(this.props.data);
 
     if (!song) {
       return <div>Loading...</div>;
