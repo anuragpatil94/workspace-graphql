@@ -1,7 +1,27 @@
 const { gql, ApolloServer } = require("apollo-server");
 
 // GraphQL Schema Example
+/*
+  # Query
+  query {
+    greeting
+  }
+
+  # result 
+  {
+    "data": {
+      "greeting": "Hello World!"
+    }
+  }
+ */
 const typeDefs = gql`
+  # Hidden Step
+  # This <query> matches the <query> operation when writing query in graphiql
+  schema {
+    query: Query
+  }
+
+  ###########
   type Query {
     greeting: String
   }
