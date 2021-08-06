@@ -32,6 +32,19 @@ export async function loadJob(id) {
   const { job } = await graphqlRequest(query, { id });
   return job;
 }
+export async function loadCompany(id) {
+  const query = `
+    query CompanyQuery($id:ID!){
+      company(id: $id){
+        id
+        name
+        description
+      }
+    }
+  `;
+  const { company } = await graphqlRequest(query, { id });
+  return company;
+}
 
 async function graphqlRequest(query, variables = {}) {
   const res = await fetch(endPointURL, {
