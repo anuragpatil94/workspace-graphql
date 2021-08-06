@@ -1,3 +1,5 @@
+const fs = require("fs");
+const { gql, ApolloServer } = require("apollo-server-express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
@@ -17,6 +19,18 @@ app.use(
     credentialsRequired: false,
   })
 );
+
+/**
+ * Since the scema is in different fine, we can use gql as function and pass the
+ * file name to it. Encoding is set to utf-8, so that it will not be read as
+ * binary file.
+ */
+const typeDefs = gql(
+  fs.readFileSync("./schema.graphql", { encoding: "utf-8" })
+);
+const resolvers = require("./resolvers");
+const apolloServer = new ApolloServer({ typeDefs, resolvers });
+apolloServer.applyMiddleware({ app, path: "/graphql" });
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
