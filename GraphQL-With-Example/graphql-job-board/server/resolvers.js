@@ -12,7 +12,10 @@ const Query = {
  * in schema `company`  is a field of `Job` type, we need to declare
  * new resolver object of `job` type, where we can put functions to resolve the
  * fields of `Job` type.
- * The 1st param that this recieves is the parentObject (job)
+ * The 1st param that this recieves is the parentObject (job) and
+ * 2nd param is args.
+ * in following example:
+ * `company` matches the field in query
  */
 const Job = {
   company: (job) => db.companies.get(job.companyId),
