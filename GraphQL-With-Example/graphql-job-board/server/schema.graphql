@@ -5,6 +5,10 @@ type Query {
   companies: [Company]
 }
 
+type Mutation {
+  createJob(companyId: ID, title: String, description: String): ID
+}
+
 #  `!` means that the field is always not-null
 type Job {
   id: ID!

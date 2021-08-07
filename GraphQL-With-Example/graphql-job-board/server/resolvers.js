@@ -7,6 +7,12 @@ const Query = {
   companies: () => db.companies.list(),
 };
 
+const Mutation = {
+  createJob: (root, { companyId, title, description }) => {
+    return db.jobs.create({ companyId, title, description });
+  },
+};
+
 /**
  * Resolvers must reflect the schema.
  * in schema `company`  is a field of `Job` type, we need to declare
@@ -26,4 +32,4 @@ const Company = {
     db.jobs.list().filter((job) => job.companyId === company.id),
 };
 
-module.exports = { Query, Job, Company };
+module.exports = { Query, Mutation, Job, Company };
