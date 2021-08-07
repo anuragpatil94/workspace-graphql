@@ -29,7 +29,16 @@ const typeDefs = gql(
   fs.readFileSync("./schema.graphql", { encoding: "utf-8" })
 );
 const resolvers = require("./resolvers");
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+
+/**
+ * the context here will be available to all the queries in resolvers
+ * as the 3rd param. We can put whatever we want in the context.
+ */
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => ({ user: req.user }),
+});
 apolloServer.applyMiddleware({ app, path: "/graphql" });
 
 app.post("/login", (req, res) => {
