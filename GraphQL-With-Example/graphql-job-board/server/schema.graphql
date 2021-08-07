@@ -28,7 +28,6 @@ type Company {
 # Input types can be used as a placeholder for arguments to a given query
 # or mutaiton
 input CreateJobInput {
-  companyId: ID
   title: String
   description: String
 }
