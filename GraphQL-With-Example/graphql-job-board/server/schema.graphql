@@ -6,10 +6,11 @@ type Query {
 }
 
 type Mutation {
-  createJob(companyId: ID, title: String, description: String): Job
+  createJob(input: CreateJobInput): Job
 }
 
 #  `!` means that the field is always not-null
+# these are output types
 type Job {
   id: ID!
   title: String
@@ -22,4 +23,12 @@ type Company {
   name: String
   description: String
   jobs: [Job]
+}
+
+# Input types can be used as a placeholder for arguments to a given query
+# or mutaiton
+input CreateJobInput {
+  companyId: ID
+  title: String
+  description: String
 }
