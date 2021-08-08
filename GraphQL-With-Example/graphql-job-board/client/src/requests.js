@@ -30,9 +30,9 @@ export async function loadJobs() {
 }
 
 export async function loadJob(id) {
-  const query = `
-    query JobQuery($id:ID!){
-      job(id: $id){
+  const query = gql`
+    query JobQuery($id: ID!) {
+      job(id: $id) {
         id
         title
         description
@@ -43,41 +43,50 @@ export async function loadJob(id) {
       }
     }
   `;
-  const { job } = await graphqlRequest(query, { id });
+  const {
+    data: { job },
+  } = await client.query({ query, variables: { id } });
+  // const { job } = await graphqlRequest(query, { id });
   return job;
 }
 export async function loadCompany(id) {
-  const query = `
-    query CompanyQuery($id:ID!){
-      company(id: $id){
+  const query = gql`
+    query CompanyQuery($id: ID!) {
+      company(id: $id) {
         id
         name
         description
-        jobs{
+        jobs {
           id
           title
         }
       }
     }
   `;
-  const { company } = await graphqlRequest(query, { id });
+  const {
+    data: { company },
+  } = await client.query({ query, variables: { id } });
+  // const { company } = await graphqlRequest(query, { id });
   return company;
 }
 
 export async function createJob(input) {
-  const mutation = `
-    mutation ($input: CreateJobInput){
-      job: createJob(input:$input){
+  const mutation = gql`
+    mutation ($input: CreateJobInput) {
+      job: createJob(input: $input) {
         id
         title
-        company{
+        company {
           id
           name
         }
       }
     }
   `;
-  const { job } = await graphqlRequest(mutation, { input });
+  const {
+    data: { job },
+  } = await client.mutate({ mutation, variables: { input } });
+  // const { job } = await graphqlRequest(mutation, { input });
   return job;
 }
 
