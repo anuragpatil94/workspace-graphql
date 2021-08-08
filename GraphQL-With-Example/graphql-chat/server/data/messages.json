@@ -1,0 +1,37 @@
+[
+  {
+    "id": "SJKhIAKYB",
+    "from": "system",
+    "text": "Welcome!"
+  },
+  {
+    "id": "BkSC1_p1F",
+    "from": "alice",
+    "text": "Hi Guys"
+  },
+  {
+    "id": "BkC0ku6kF",
+    "from": "bob",
+    "text": "Hi Alice"
+  },
+  {
+    "id": "Bkb4idaJF",
+    "from": "alice",
+    "text": "Hi Bob"
+  },
+  {
+    "id": "ByLIodaJF",
+    "from": "bob",
+    "text": "How is it going?"
+  },
+  {
+    "id": "S1h4lYTJF",
+    "from": "alice",
+    "text": "Nothing Much"
+  },
+  {
+    "id": "BJatlKpJY",
+    "from": "alice",
+    "text": "How about you?"
+  }
+]
