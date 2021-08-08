@@ -30,6 +30,18 @@ const client = new ApolloClient({
 });
 
 // Queries
+const jobDetailFragment = gql`
+  fragment JobDetail on Job {
+    id
+    title
+    description
+    company {
+      id
+      name
+    }
+  }
+`;
+
 const loadCompanyQuery = gql`
   query CompanyQuery($id: ID!) {
     company(id: $id) {
@@ -47,15 +59,12 @@ const loadCompanyQuery = gql`
 const loadJobQuery = gql`
   query JobQuery($id: ID!) {
     job(id: $id) {
-      id
-      title
-      description
-      company {
-        id
-        name
-      }
+      ...JobDetail
     }
   }
+  # It is important to specify the fragment. Since we have it in separate
+  # javascript variable we can call it here.
+  ${jobDetailFragment}
 `;
 
 const loadJobsQuery = gql`
@@ -74,15 +83,10 @@ const loadJobsQuery = gql`
 const createJobMutation = gql`
   mutation ($input: CreateJobInput) {
     job: createJob(input: $input) {
-      id
-      title
-      description
-      company {
-        id
-        name
-      }
+      ...JobDetail
     }
   }
+  ${jobDetailFragment}
 `;
 
 export async function loadJobs() {
