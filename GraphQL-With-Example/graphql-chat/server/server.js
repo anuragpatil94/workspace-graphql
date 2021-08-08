@@ -24,9 +24,17 @@ app.use(
 const typeDefs = fs.readFileSync("./schema.graphql", { encoding: "utf8" });
 const resolvers = require("./resolvers");
 
-function context({ req }) {
+// Context depends on whether connection is WS connection or HTTP
+function context({ req, connection }) {
+  // Thisis based on split method used when created apollo client
+  // get req if http is used.
   if (req && req.user) {
     return { userId: req.user.sub };
+  }
+  // get connection object when a websoket is used
+  if (connection && connection.context && connection.context.accessToken) {
+    const decodedToken = jwt.verify(connection.context.accessToken, jwtSecret);
+    return { userId: decodedToken.sub };
   }
   return {};
 }

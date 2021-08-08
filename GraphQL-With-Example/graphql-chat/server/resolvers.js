@@ -28,9 +28,14 @@ const Mutation = {
 };
 
 // asyncIterator will notify all users that new message is updated
+// 3rd param is context object. what context has depends on how context
+// is build while creating apolloServer in server.js
 const Subscription = {
   messageAdded: {
-    subscribe: () => pubSub.asyncIterator(MESSAGE_ADDED),
+    subscribe: (_root, _args, { userId }) => {
+      requireAuth(userId);
+      return pubSub.asyncIterator(MESSAGE_ADDED);
+    },
   },
 };
 
