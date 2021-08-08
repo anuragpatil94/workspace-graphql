@@ -23,11 +23,17 @@ const httpLink = ApolloLink.from([
   new HttpLink({ uri: httpUrl }),
 ]);
 
+// connectionParams can be used to pass extra values to the server when creating
+// web socket. it can be a object or a function.
+// using a function is useful if value inside object changes over time.
 const wsLink = new WebSocketLink({
   uri: wsUrl,
   options: {
     lazy: true,
     reconnect: true,
+    connectionParams: () => ({
+      accessToken: getAccessToken(),
+    }),
   },
 });
 
