@@ -23,5 +23,15 @@
     "id": "ByLIodaJF",
     "from": "bob",
     "text": "How is it going?"
+  },
+  {
+    "id": "S1h4lYTJF",
+    "from": "alice",
+    "text": "Nothing Much"
+  },
+  {
+    "id": "BJatlKpJY",
+    "from": "alice",
+    "text": "How about you?"
   }
 ]

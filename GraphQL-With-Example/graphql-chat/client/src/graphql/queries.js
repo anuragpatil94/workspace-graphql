@@ -21,6 +21,26 @@ const addMessageMutation = gql`
   }
 `;
 
+const messageAddedSubscription = gql`
+  subscription {
+    messageAdded {
+      id
+      from
+      text
+    }
+  }
+`;
+
+export async function onMessageAdded(handleMessage) {
+  // Start subscription. initiates graphql subscription with the server
+  const observable = client.subscribe({ query: messageAddedSubscription });
+
+  // This is to dispatch messages to components (to different part of client app)
+  return observable.subscribe((result) =>
+    handleMessage(result.data.messageAdded)
+  );
+}
+
 export async function addMessage(text) {
   const { data } = await client.mutate({
     mutation: addMessageMutation,
