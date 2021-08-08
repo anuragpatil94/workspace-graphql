@@ -1,10 +1,31 @@
-import { ApolloClient, HttpLink, InMemoryCache, gql } from "apollo-boost";
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  gql,
+  ApolloLink,
+} from "apollo-boost";
 import { getAccessToken, isLoggedIn } from "./auth";
 
 const endPointURL = " http://localhost:9000/graphql";
 
+const authLink = new ApolloLink((operation, forward) => {
+  if (isLoggedIn()) {
+    operation.setContext({
+      headers: {
+        authorization: `Bearer ${getAccessToken()}`,
+      },
+    });
+  }
+  // forward function allows us to chain multiple steps together
+  return forward(operation);
+});
+/**
+ * `authLink` is added before `HttpLink`. This means that `authLink` will be
+ * executed before `HttpLink`
+ */
 const client = new ApolloClient({
-  link: new HttpLink({ uri: endPointURL }),
+  link: ApolloLink.from([authLink, new HttpLink({ uri: endPointURL })]),
   cache: new InMemoryCache(),
 });
 
@@ -90,6 +111,15 @@ export async function createJob(input) {
   return job;
 }
 
+/**
+ * NOTE: We are using apollo-client now, so this function will not be used.
+ *
+ * A Generic function that handles graphql requests
+ * @param {String} query takes query as a string instead of gql tag function (object)
+ * @param {object} variables list of variables that the query uses
+ * @returns object
+ */
+// eslint-disable-next-line no-unused-vars
 async function graphqlRequest(query, variables = {}) {
   const request = {
     method: "POST",
