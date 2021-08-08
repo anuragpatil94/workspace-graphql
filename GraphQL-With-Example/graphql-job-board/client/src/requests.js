@@ -1,19 +1,31 @@
+import { ApolloClient, HttpLink, InMemoryCache, gql } from "apollo-boost";
 import { getAccessToken, isLoggedIn } from "./auth";
 
 const endPointURL = " http://localhost:9000/graphql";
+
+const client = new ApolloClient({
+  link: new HttpLink({ uri: endPointURL }),
+  cache: new InMemoryCache(),
+});
+
 export async function loadJobs() {
-  const query = `
+  const query = gql`
     {
-      jobs{
+      jobs {
         id
         title
-        company{
+        company {
+          id
           name
         }
       }
     }
   `;
-  const { jobs } = await graphqlRequest(query);
+  // const { jobs } = await graphqlRequest(query);
+  const {
+    data: { jobs },
+  } = await client.query({ query });
+
   return jobs;
 }
 
