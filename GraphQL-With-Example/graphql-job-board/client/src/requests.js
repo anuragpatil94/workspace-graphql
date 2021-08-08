@@ -45,7 +45,7 @@ export async function loadJobs() {
   // const { jobs } = await graphqlRequest(query);
   const {
     data: { jobs },
-  } = await client.query({ query });
+  } = await client.query({ query, fetchPolicy: "no-cache" });
 
   return jobs;
 }
